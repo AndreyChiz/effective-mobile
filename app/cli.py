@@ -28,6 +28,7 @@ class FreackyAccounting:
             self.username = None
             return None
         fake_db.append(self.username)
+        return True
 
 
     def get_comand(self):
