@@ -1,6 +1,6 @@
 from freacky_accounting import FreackyAccounting
 from lexicon import ru_dialog as dialog
-from exceptions import MadUserException
+
 import time
 
 from config import command_palette as commands, transaction_category
@@ -17,7 +17,7 @@ class ConsoleCli:
             ):
                 print(dialog.creating_user_saccess.format(self.app.username))
 
-    def _command_handler(self, wrap_command: str):
+    def _command_handler(self, wrap_command: str) -> None:
         """Handle user commands from console
         args: wrap_command (str): the string of entered command
         """
@@ -33,7 +33,7 @@ class ConsoleCli:
                         description=" ".join(args) if args else None,
                     )
                 case [commands.get, *filters]:
-                    self.get_transaction(*filters)
+                    self.app.get_transaction(filters=filters)
 
                 case [commands.delete, transaction_id]:
                     self.app.delete_transaction(transaction_id)
@@ -59,8 +59,8 @@ class ConsoleCli:
         transaction_id: str = None,
         category: str = None,
         prise: str = None,
-    ):
-        
+    )-> bool | None:
+        """Validating user entered data"""
         if category and category not in transaction_category:
             print(
                 dialog.invalid_value_command_palette.format(

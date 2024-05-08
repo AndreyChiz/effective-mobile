@@ -5,7 +5,7 @@ from loguru import logger
 # logger settings
 def setup_logger():
     logger.remove()
-    logger.add(sys.stderr, level="INFO")
+    logger.add(sys.stderr, level="WARNING")
     return logger
 
 

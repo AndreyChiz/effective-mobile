@@ -1,10 +1,12 @@
 import datetime
 import csv
+import sys
 import os
-from loguru import logger
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
+from config import root_logger as logger
 from .servises import CSVFileIterator
 
-print(os.getcwd())
 
 
 class Database:
@@ -46,9 +48,12 @@ class Database:
     def get_last_id(self) -> str:
         iterator = CSVFileIterator(self.user_file_path)
         last_id = iterator[-1][0]
-        
-
         return (int(last_id) if last_id.isdigit() else 0)
+    
+    def read_data(self):
+        iterator = CSVFileIterator(self.user_file_path)
+        
+        return iterator[1:]
 
 
 

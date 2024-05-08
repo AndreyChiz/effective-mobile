@@ -36,12 +36,6 @@ class FreackyAccounting:
         if confurm.lower() in ("y", "yes", "дa", "д"):
             return self._database.create_user_data_file()
         self.username = None
-
-
-
-
-
-
     
     def create_transaction(
         self,
@@ -58,14 +52,24 @@ class FreackyAccounting:
         logger.info(
             f"Category: {category}, Price: {price}, Description: {description}, Date: {date}"
         )
-
-        
         self._database.write_row(
              [self._database.get_last_id()+1, category, price, description, date]
         )
 
+    @staticmethod
+    def compare(x,comp_type , y):
+        if comp_type == ">":
+            return True if x > y else False
+        if comp_type == "<":
+            return True if x < y else False
+        if comp_type == "=":
+            return True if x == y else False
 
-
+    def get_transaction(self, filters=None):
+        for item in self._database.read_data():
+            print(item)
+        # TODO
+        
 
 
 
@@ -75,7 +79,7 @@ class FreackyAccounting:
 
     def delete_transaction(self): ...
 
-    def get_transaction(self): ...
+    
 
 
 if __name__ == "__main__":
