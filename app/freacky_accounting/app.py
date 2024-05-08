@@ -11,7 +11,7 @@ from config import root_logger as logger
 
 
 
-fake_db = ["123", "456"]
+
 
 
 class FreackyAccounting:
@@ -60,8 +60,9 @@ class FreackyAccounting:
         )
 
         
-        return [self._database.get_last_id()+1, category, price, description, date]
-
+        self._database.write_row(
+             [self._database.get_last_id()+1, category, price, description, date]
+        )
 
 
 

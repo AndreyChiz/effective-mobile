@@ -34,3 +34,19 @@ command_palette = CommandPalette(
     update="UPDATE",
     exit="EXIT",
 )
+
+#Transaction category alias settings
+
+TransactionCategory = namedtuple(
+    "TransactionCategory",
+    [
+        "revenues",
+        "expenses"
+      
+    ],
+)
+
+transaction_category = TransactionCategory(
+    revenues="Доход",
+    expenses="Расход"
+)

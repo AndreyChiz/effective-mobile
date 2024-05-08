@@ -14,7 +14,7 @@ class Database:
         self.username = username
         self.create_data_catalog_if_not_exist()
         self.user_file_path = os.path.join(self.user_data_path, f"{username}.csv")
-        self.iterator = CSVFileIterator(self.user_file_path)
+        
         self.last_row_id: int = None
         logger.info(self.user_file_path)
         logger.info(self.user_data_path)
@@ -44,9 +44,11 @@ class Database:
             return self.username
 
     def get_last_id(self) -> str:
-        return self.iterator[-1][0]
+        iterator = CSVFileIterator(self.user_file_path)
+        last_id = iterator[-1][0]
+        
 
-
+        return (int(last_id) if last_id.isdigit() else 0)
 
 
 
