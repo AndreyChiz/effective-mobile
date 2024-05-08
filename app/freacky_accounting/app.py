@@ -1,9 +1,15 @@
+import sys
+import os
+import datetime
+
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+
 from .database import Database
 from .servises import Formater
+from config import root_logger as logger
 
 
-from loguru import logger
-import datetime
+
 
 fake_db = ["123", "456"]
 
@@ -19,7 +25,7 @@ class FreackyAccounting:
         return bool(self.username)
 
     def is_user_exist(self):
-        return self._database.is_user_file_exist()
+        return self._database._is_user_file_exist()
 
     def create_user(self, confurm: str):
         """Creating new user
@@ -28,10 +34,15 @@ class FreackyAccounting:
 
         """
         if confurm.lower() in ("y", "yes", "дa", "д"):
-            print("создаем")
             return self._database.create_user_data_file()
         self.username = None
 
+
+
+
+
+
+    
     def create_transaction(
         self,
         category: str,
@@ -43,7 +54,23 @@ class FreackyAccounting:
 
         if not date:
             date = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        print(category, price, description, date) #TODO
+
+        logger.info(
+            f"Category: {category}, Price: {price}, Description: {description}, Date: {date}"
+        )
+
+        
+        return [self._database.get_last_id()+1, category, price, description, date]
+
+
+
+
+
+
+
+
+
+
 
     def delete_transaction(self): ...
 

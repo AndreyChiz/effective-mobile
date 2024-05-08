@@ -3,6 +3,7 @@ from lexicon import ru_dialog as dialog
 from exceptions import MadUserException
 import time
 
+from config import command_palette as commands
 
 class ConsoleCli:
     """Console client class for interaction via console"""
@@ -15,32 +16,32 @@ class ConsoleCli:
             ): print(dialog.creating_user_saccess.format(self.app.username))
 
     def _command_handler(self, wrap_command: str):
-        """Handle commands from console
+        """Handle user commands from console
         args: wrap_command (str): the string of entered command
         """
         if command := tuple(wrap_command.strip().split()):
 
             match command:
-                case ["CREATE", category, price, *args]:
+                case [commands.create, category, price, *args]:
 
                     self.app.create_transaction(
                         category=category,
                         price=price,
                         description=" ".join(args) if args else None,
                     )
-                case ["GET", *filters]:
+                case [commands.get, *filters]:
                     self.get_transaction(*filters)
 
-                case ["DELETE", transaction_id]:
+                case [commands.delete, transaction_id]:
                     self.app.delete_transaction(transaction_id)
 
-                case ["TOTAL", category]:
+                case [commands.total, category]:
                     self.app.total_cost(category)
 
-                case ["UPDATE", *updated_fielsd]:
+                case [commands.update, *updated_fielsd]:
                     self.app.update_transaction(*updated_fielsd)
 
-                case ["EXIT"]:
+                case [commands.exit]:
                     self.app = None
 
                 case _ as invalid_command:
@@ -62,7 +63,7 @@ class ConsoleCli:
     def start_session(self) -> None:
         """Provides console session."""
         while self.app:
-            if cli_command := input(dialog.entering_command_request):
+            if cli_command := input(dialog.entering_command_request.format(self.app.username)):
                 self._command_handler(cli_command)
 
         print(dialog.program_end)

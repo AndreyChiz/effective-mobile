@@ -1,4 +1,4 @@
-__all__ = ["Database", "Formater"]
+__all__ = ["Formater", "CSVFileIterator"]
 
-from ..database import Database
 from .formater import Formater
+from .csv_iterator import CSVFileIterator

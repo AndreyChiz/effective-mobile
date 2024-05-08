@@ -1,4 +1,6 @@
+from config import root_logger as logger
+
 class Formater:
 
     def __init__(self, *args, **kwargs):
-        print("formater initialized")
+        logger.info("formater initialized")
