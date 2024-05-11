@@ -1,3 +1,4 @@
 get all
 get filter Доход filter Цена > X filter Дата > Y 
+check
 
